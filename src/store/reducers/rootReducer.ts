@@ -1,6 +1,10 @@
 import { combineReducers } from "redux"
-import gameReducer from "./gameReducer"
+import gameReducer, { GameState } from "./gameReducer"
 
-const rootReducer = combineReducers({ grid: gameReducer })
+export type State = {
+    game: GameState
+}
+
+const rootReducer = combineReducers({ game: gameReducer })
 
 export default rootReducer

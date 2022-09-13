@@ -1,23 +1,17 @@
 import { useEffect } from "react"
-import { useDispatch, useSelector } from "react-redux"
 import styled from "styled-components"
-import { GridProps } from "../store/reducers/gameReducer"
-import { State } from "../store/reducers/rootReducer"
+import { useAppDispatch, useAppSelector } from "../store/hook"
+import { GridProps, initialize } from "../store/slices/gameSlice"
 import Cell from "./Cell"
 
 const Grid = ({ width, height }: GridProps) => {
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
 
     useEffect(() => {
-        dispatch({
-            type: 'grid/initialize', payload: {
-                width: width, height: height
-            }
-        })
+        dispatch(initialize({ height, width }))
     }, [dispatch, height, width])
 
-    const grid = useSelector((state: State) => state.game.grid)
-    console.log(grid)
+    const grid = useAppSelector(state => state.game.grid);
 
     return (
         <>

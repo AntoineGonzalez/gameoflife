@@ -46,4 +46,4 @@ const Line = styled.div`
     display: flex
 `
 
-export default Grid;
+export default Grid

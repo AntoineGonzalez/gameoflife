@@ -1,5 +1,5 @@
-import { configureStore } from "@reduxjs/toolkit";
-import gameReducer, { GameState } from "./slices/gameSlice";
+import { configureStore } from "@reduxjs/toolkit"
+import gameReducer, { GameState } from "./slices/gameSlice"
 
 export type RootState = {
     game: GameState

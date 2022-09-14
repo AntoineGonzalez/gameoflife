@@ -1,7 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import gameReducer, { GameState } from "./slices/gameSlice";
 
-export type State = {
+export type RootState = {
     game: GameState
 }
 
@@ -10,6 +10,3 @@ export const store = configureStore({
         game: gameReducer
     }
 })
-
-export type RootState = ReturnType<typeof store.getState>
-export type AppDispatch = typeof store.dispatch

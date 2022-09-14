@@ -5,6 +5,8 @@ export type RootState = {
     game: GameState
 }
 
+export type Selector<S> = (state: RootState) => S
+
 export const store = configureStore({
     reducer: {
         game: gameReducer

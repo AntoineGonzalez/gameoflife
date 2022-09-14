@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { Selector } from "../store";
 
 export type GameState = {
     grid: boolean[][];
@@ -33,4 +34,6 @@ export const gameSlice = createSlice({
 })
 
 export const { initialize } = gameSlice.actions
+export const selectGrid: Selector<boolean[][]> = state => state.game.grid
+
 export default gameSlice.reducer;

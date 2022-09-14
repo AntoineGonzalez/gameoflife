@@ -14,25 +14,23 @@ const Grid = ({ width, height }: GridProps) => {
     const grid = useAppSelector(state => state.game.grid);
 
     return (
-        <>
-            <Wrapper id="grid" width={grid[0].length} height={grid.length}>
-                {
-                    grid.map((line, lineIndex) =>
-                        <Line key={`line-${lineIndex}`}>
-                            {
-                                line.map((value, colIndex) =>
-                                    < Cell
-                                        id={`cell-${colIndex}-${lineIndex}`}
-                                        key={`cell-${colIndex}-${lineIndex}`}
-                                        isAlive={value}
-                                    />
-                                )
-                            }
-                        </Line>
-                    )
-                }
-            </Wrapper>
-        </>
+        <Wrapper id="grid" width={grid[0].length} height={grid.length}>
+            {
+                grid.map((line, lineIndex) =>
+                    <Line key={`line-${lineIndex}`}>
+                        {
+                            line.map((isAlive, colIndex) =>
+                                < Cell
+                                    id={`cell-${colIndex}-${lineIndex}`}
+                                    key={`cell-${colIndex}-${lineIndex}`}
+                                    isAlive={isAlive}
+                                />
+                            )
+                        }
+                    </Line>
+                )
+            }
+        </Wrapper>
     )
 }
 

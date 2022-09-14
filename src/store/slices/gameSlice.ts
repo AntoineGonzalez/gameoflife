@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export type GameState = {
     grid: boolean[][];
-    state: boolean;
+    isRunning: boolean;
     iterationCounter: number;
 }
 
@@ -13,7 +13,7 @@ export type GridProps = {
 
 const initialState: GameState = {
     grid: [[]],
-    state: false,
+    isRunning: false,
     iterationCounter: 0
 }
 

@@ -12,7 +12,12 @@ export type GridProps = {
     height: number;
 }
 
-const initialState: GameState = {
+export type Coord = {
+    x: number,
+    y: number
+}
+
+export const initialState: GameState = {
     grid: [[]],
     isRunning: false,
     iterationCounter: 0
@@ -25,15 +30,25 @@ export const gameSlice = createSlice({
         initialize: (state, action: PayloadAction<GridProps>) => {
             return {
                 ...state,
-                grid: Array.from(Array(action.payload.width).keys()).map(() => {
-                    return Array.from(Array(action.payload.height).keys()).map(() => Math.random() < 0.5)
+                grid: Array.from(Array(action.payload.height).keys()).map(() => {
+                    return Array.from(Array(action.payload.width).keys()).map(() => false)
                 })
+            }
+        },
+        toggleCellState: (state, action: PayloadAction<Coord>) => {
+            return {
+                ...state,
+                grid: state.grid.map((line, lineIndex) =>
+                    line.map((isAlive, colIndex) =>
+                        (colIndex === action.payload.x && lineIndex === action.payload.y) ? !isAlive : isAlive
+                    )
+                )
             }
         }
     }
 })
 
-export const { initialize } = gameSlice.actions
+export const { initialize, toggleCellState } = gameSlice.actions
 export const selectGrid: Selector<boolean[][]> = state => state.game.grid
 
 export default gameSlice.reducer;

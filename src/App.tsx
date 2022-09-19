@@ -9,7 +9,7 @@ function App() {
       <Header>
         Jeu de la vie
       </Header>
-      <Grid width={10} height={20} />
+      <Grid width={20} height={10} />
     </div>
   );
 }

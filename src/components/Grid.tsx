@@ -1,29 +1,35 @@
 import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import styled from "styled-components"
-import { GridProps, initialize, selectGrid } from "../store/slices/gameSlice"
+import { Coord, GridProps, initialize, selectGrid, toggleCellState } from "../store/slices/gameSlice"
 import Cell from "./Cell"
 
 const Grid = ({ width, height }: GridProps) => {
     const dispatch = useDispatch();
-
-    useEffect(() => {
-        dispatch(initialize({ height, width }))
-    }, [dispatch, height, width])
-
     const grid = useSelector(selectGrid);
 
+    
+    function handleCellClick(coord: Coord) {
+        dispatch(toggleCellState(coord))
+    }
+    
+    useEffect(() => {
+        dispatch(initialize({ width, height }))
+    }, [dispatch, height, width])
+    
     return (
         <Wrapper id="grid" width={grid[0].length} height={grid.length}>
             {
                 grid.map((line, lineIndex) =>
-                    <Line key={`line-${lineIndex}`}>
+                    <Line key={`line-${lineIndex}`} role="row">
                         {
                             line.map((isAlive, colIndex) =>
                                 < Cell
                                     id={`cell-${colIndex}-${lineIndex}`}
                                     key={`cell-${colIndex}-${lineIndex}`}
                                     isAlive={isAlive}
+                                    onClick={() => handleCellClick({ x: colIndex, y: lineIndex })}
+                                    role="gridcell"
                                 />
                             )
                         }

@@ -28,7 +28,7 @@ const setCellIsAlive = (state: GameState, coord: Coord, value: boolean) => {
   }
 }
 
-const initialState: GameState = {
+export const initialState: GameState = {
   grid: [[]],
   isRunning: false,
   iterationCounter: 0

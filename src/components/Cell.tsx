@@ -1,6 +1,6 @@
-import styled from "styled-components"
+import styled from 'styled-components'
 type Props = {
-    isAlive: boolean;
+  isAlive: boolean
 }
 
 const Cell = styled.div<Props>`

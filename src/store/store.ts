@@ -1,14 +1,14 @@
-import { configureStore } from "@reduxjs/toolkit";
-import gameReducer, { GameState } from "./slices/gameSlice";
+import { configureStore } from '@reduxjs/toolkit'
+import gameReducer, { GameState } from './slices/gameSlice'
 
 export type RootState = {
-    game: GameState
+  game: GameState
 }
 
 export type Selector<S> = (state: RootState) => S
 
 export const store = configureStore({
-    reducer: {
-        game: gameReducer
-    }
+  reducer: {
+    game: gameReducer
+  }
 })

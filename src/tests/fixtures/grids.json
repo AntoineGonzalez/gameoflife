@@ -1,0 +1,54 @@
+{
+    "initialGrid": [
+        [
+            false,
+            false,
+            false,
+            false
+        ],
+        [
+            false,
+            false,
+            false,
+            false
+        ],
+        [
+            false,
+            false,
+            false,
+            false
+        ],
+        [
+            false,
+            false,
+            false,
+            false
+        ]
+    ],
+    "gridRevivedCell": [
+        [
+            false,
+            false,
+            false,
+            false
+        ],
+        [
+            false,
+            true,
+            false,
+            false
+        ],
+        [
+            false,
+            false,
+            false,
+            false
+        ],
+        [
+            false,
+            false,
+            false,
+            false
+        ]
+    ]
+}

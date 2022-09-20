@@ -11,7 +11,7 @@ describe('components/Grid.tsx', () => {
     expect(screen.getAllByRole('gridcell')).toHaveLength(200)
   })
 
-  it('displays an initialised grid with only dead cells', () => {
+  it('displays an initialized grid with only dead cells', () => {
     render(wrapWithReduxProvider(<Grid width={20} height={10} />))
 
     screen.getAllByRole('gridcell').forEach((cell) => {

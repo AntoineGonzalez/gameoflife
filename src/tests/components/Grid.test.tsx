@@ -21,13 +21,20 @@ describe('components/Grid.tsx', () => {
     })
   })
 
-  it('toggles isAlive cells porperty onclick', async () => {
+  it('revives a cell when a user clicks on a dead one', async () => {
     render(wrapWithReduxProvider(<Grid width={20} height={10} />))
 
     const cell = screen.getAllByRole('gridcell')[0]
     expect(cell).toHaveStyle('background-color:grey')
     await userEvent.click(cell)
     expect(cell).toHaveStyle('background-color:white')
+  })
+
+  it('kills a cell when a user clicks on a living one', async () => {
+    render(wrapWithReduxProvider(<Grid width={20} height={10} />))
+
+    const cell = screen.getAllByRole('gridcell')[0]
+    await userEvent.click(cell)
     await userEvent.click(cell)
     expect(cell).toHaveStyle('background-color:grey')
   })

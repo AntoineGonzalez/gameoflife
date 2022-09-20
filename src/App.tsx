@@ -28,27 +28,24 @@ function App () {
   }
 
   return (
-    <div className="App">
-        <Body>
-        <Aside>
-            <Header>
-              Jeu de la vie
-            </Header>
-            <List>
-              <li>Nombre d&apos;itérations : {gameState.iterationCounter}</li>
-              <li>
-                <Button onClick={gameState.isRunning ? handleStopGame : handleStarGame}>
-                  {gameState.isRunning ? 'Stop' : 'Start'}
-                </Button>
-              </li>
-            </List>
-          </Aside>
-          <Container>
-            <Grid width={50} height={50} />
-          </Container>
-        </Body>
-
-    </div>
+    <AppContainer className="App">
+      <Aside>
+        <Header>
+          Jeu de la vie
+        </Header>
+        <List>
+          <li>Nombre d&apos;itérations : {gameState.iterationCounter}</li>
+          <li>
+            <Button onClick={gameState.isRunning ? handleStopGame : handleStarGame} role="button">
+              {gameState.isRunning ? 'Stop' : 'Start'}
+            </Button>
+          </li>
+        </List>
+      </Aside>
+      <Container>
+        <Grid width={20} height={20} />
+      </Container>
+    </AppContainer>
   )
 }
 
@@ -58,7 +55,7 @@ const Container = styled.div`
 const Header = styled.header`
   margin-bottom: 1.5em;
 `
-const Body = styled.body`
+const AppContainer = styled.div`
   display: flex;
 `
 const Aside = styled.aside`

@@ -2,6 +2,8 @@ import { render, screen } from '@testing-library/react'
 import Grid from '../../components/Grid'
 import wrapWithReduxProvider from '../utils/reduxProviderWrapper'
 import userEvent from '@testing-library/user-event'
+import App from '../../App'
+// import App from '../../App'
 
 describe('components/Grid.tsx', () => {
   it('displays a grid with desired dimensions', () => {
@@ -28,5 +30,15 @@ describe('components/Grid.tsx', () => {
     expect(cell).toHaveStyle('background-color:white')
     await userEvent.click(cell)
     expect(cell).toHaveStyle('background-color:grey')
+  })
+
+  it('starts the game on start game button click and its stop game on stop game button click', async () => {
+    render(wrapWithReduxProvider(<App />))
+
+    const startGameBtn = screen.getByRole('button', { name: 'Start' })
+    await userEvent.click(startGameBtn)
+    expect(startGameBtn).toHaveTextContent('Stop')
+    await userEvent.click(startGameBtn)
+    expect(startGameBtn).toHaveTextContent('Start')
   })
 })

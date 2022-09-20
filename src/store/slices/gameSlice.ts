@@ -78,7 +78,7 @@ function computeIteration (state: GameState): GameState {
         ).filter((value) => value).length
 
         if ((!cellIsAlive && alivedNeighboursCount === 3) ||
-                    (cellIsAlive && [2, 3].includes(alivedNeighboursCount))
+          (cellIsAlive && [2, 3].includes(alivedNeighboursCount))
         ) {
           return true
         }

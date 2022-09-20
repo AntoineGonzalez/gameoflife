@@ -2,7 +2,7 @@ import gameSlice from '../../store/slices/gameSlice'
 import gridsFixtures from '../fixtures/grids.json'
 
 describe('store/slices/gameSlice', () => {
-  it('reduces state to initialized a grid with specific width and height', () => {
+  it('reduces the initialize action', () => {
     const { actions, reducer } = gameSlice
 
     const initialState = {
@@ -25,7 +25,7 @@ describe('store/slices/gameSlice', () => {
     expect(actual).toStrictEqual(expected)
   })
 
-  it('reduces state to revive a specific cell', () => {
+  it('reduces the reviveCell action', () => {
     const { actions, reducer } = gameSlice
 
     const initialState = {
@@ -44,7 +44,7 @@ describe('store/slices/gameSlice', () => {
     expect(actual).toStrictEqual(expected)
   })
 
-  it('reduces state to kill a specific cell', () => {
+  it('reduces the killCell action', () => {
     const { actions, reducer } = gameSlice
 
     const initialState = {

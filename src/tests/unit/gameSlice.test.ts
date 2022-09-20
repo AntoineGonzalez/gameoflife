@@ -44,7 +44,7 @@ describe('store/slices/gameSlice', () => {
     expect(actual).toStrictEqual(expected)
   })
 
-  it('reduces the KillCell action', () => {
+  it('reduces the killCell action', () => {
     const { actions, reducer } = gameSlice
 
     const initialState = {

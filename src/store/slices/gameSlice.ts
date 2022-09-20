@@ -47,7 +47,7 @@ function getNeighboursValue (state: GameState, { x, y }: Coord): Boolean[] {
   const westIndex = x > 0
     ? x - 1
     : gridWidth - 1
-  const eastIndex = x < gridHeight - 1
+  const eastIndex = x < gridWidth - 1
     ? x + 1
     : 0
 

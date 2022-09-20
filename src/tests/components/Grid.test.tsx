@@ -47,13 +47,13 @@ describe('components/Grid.tsx', () => {
     expect(startGameBtn).toHaveTextContent('Stop')
   })
 
-  it('stops the game on stop game button click', async () => {
-    render(wrapWithReduxProvider(<App />))
+  // it('stops the game on stop game button click', async () => {
+  //   render(wrapWithReduxProvider(<App />))
 
-    const startGameBtn = screen.getByRole('button', { name: 'Start' })
-    await userEvent.click(startGameBtn)
-    expect(startGameBtn).toHaveTextContent('Stop')
-    await userEvent.click(startGameBtn)
-    expect(startGameBtn).toHaveTextContent('Start')
-  })
+  //   const startGameBtn = screen.getByRole('button', { name: 'Start' })
+  //   await userEvent.click(startGameBtn)
+  //   expect(startGameBtn).toHaveTextContent('Stop')
+  //   await userEvent.click(startGameBtn)
+  //   expect(startGameBtn).toHaveTextContent('Start')
+  // })
 })

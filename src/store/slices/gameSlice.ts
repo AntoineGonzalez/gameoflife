@@ -17,6 +17,12 @@ export type Coord = {
   y: number
 }
 
+export const initialState: GameState = {
+  grid: [[]],
+  isRunning: false,
+  iterationCounter: 0
+}
+
 const setCellIsAlive = (state: GameState, coord: Coord, value: boolean) => {
   return {
     ...state,
@@ -28,13 +34,7 @@ const setCellIsAlive = (state: GameState, coord: Coord, value: boolean) => {
   }
 }
 
-export const initialState: GameState = {
-  grid: [[]],
-  isRunning: false,
-  iterationCounter: 0
-}
-
-function getNeighboursValue (state: GameState, { x, y }: Coord): Boolean[] {
+const getCellNeighboursValues = (state: GameState, { x, y }: Coord) => {
   const gridWidth = state.grid[0].length
   const gridHeight = state.grid.length
 
@@ -69,7 +69,7 @@ function computeIteration (state: GameState): GameState {
     iterationCounter: state.iterationCounter + 1,
     grid: state.grid.map((line, lineIndex) =>
       line.map((cellIsAlive, colIndex) => {
-        const alivedNeighboursCount = getNeighboursValue(
+        const alivedNeighboursCount = getCellNeighboursValues(
           state,
           {
             x: colIndex,

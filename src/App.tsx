@@ -43,7 +43,7 @@ function App () {
         </List>
       </Aside>
       <Container>
-        <Grid width={38} height={19} />
+        <Grid width={50} height={50} />
       </Container>
     </AppContainer>
   )

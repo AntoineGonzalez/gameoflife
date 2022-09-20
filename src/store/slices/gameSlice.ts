@@ -127,15 +127,6 @@ export const gameSlice = createSlice({
   }
 })
 
-export const {
-  initialize,
-  tick,
-  startGame,
-  stopGame,
-  killCell,
-  reviveCell
-} = gameSlice.actions
-
 export const selectGrid: Selector<boolean[][]> = state => state.game.grid
 export const selectGameState: Selector<GameState> = state => state.game
-export default gameSlice.reducer
+export default gameSlice

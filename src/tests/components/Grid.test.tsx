@@ -39,7 +39,15 @@ describe('components/Grid.tsx', () => {
     expect(cell).toHaveStyle('background-color:grey')
   })
 
-  it('starts the game on start game button click and its stop game on stop game button click', async () => {
+  it('starts the game on start game button click and ', async () => {
+    render(wrapWithReduxProvider(<App />))
+
+    const startGameBtn = screen.getByRole('button', { name: 'Start' })
+    await userEvent.click(startGameBtn)
+    expect(startGameBtn).toHaveTextContent('Stop')
+  })
+
+  it('stops the game on stop game button click', async () => {
     render(wrapWithReduxProvider(<App />))
 
     const startGameBtn = screen.getByRole('button', { name: 'Start' })

@@ -1,13 +1,21 @@
-import { initialState, gameSlice } from '../../store/slices/gameSlice'
+import gameSlice from '../../store/slices/gameSlice'
 import gridsFixtures from '../fixtures/grids.json'
 
 describe('store/slices/gameSlice', () => {
   it('reduces state to initialized a grid with specific width and height', () => {
     const { actions, reducer } = gameSlice
-    const width = 4
-    const height = 4
 
-    const actual = reducer(initialState, actions.initialize({ width, height }))
+    const initialState = {
+      grid: [[]],
+      isRunning: false,
+      iterationCounter: 0
+    }
+
+    const actual = reducer(
+      initialState,
+      actions.initialize({ width: 5, height: 5 })
+    )
+
     const expected = {
       isRunning: false,
       iterationCounter: 0,
@@ -19,14 +27,17 @@ describe('store/slices/gameSlice', () => {
 
   it('reduces state to revive a specific cell', () => {
     const { actions, reducer } = gameSlice
-    const width = 4
-    const height = 4
 
-    const initializeGameState = reducer(initialState, actions.initialize({ width, height }))
-    const actual = reducer(initializeGameState, actions.reviveCell({ x: 1, y: 1 }))
+    const initialState = {
+      grid: gridsFixtures.initialGrid,
+      isRunning: false,
+      iterationCounter: 0
+    }
+
+    const actual = reducer(initialState, actions.reviveCell({ x: 1, y: 1 }))
 
     const expected = {
-      ...initializeGameState,
+      ...initialState,
       grid: gridsFixtures.gridRevivedCell
     }
 
@@ -35,15 +46,17 @@ describe('store/slices/gameSlice', () => {
 
   it('reduces state to kill a specific cell', () => {
     const { actions, reducer } = gameSlice
-    const width = 4
-    const height = 4
 
-    const initializeGameState = reducer(initialState, actions.initialize({ width, height }))
-    reducer(initializeGameState, actions.reviveCell({ x: 4, y: 4 }))
+    const initialState = {
+      grid: gridsFixtures.gridRevivedCell,
+      isRunning: false,
+      iterationCounter: 0
+    }
 
-    const actual = reducer(initializeGameState, actions.killCell({ x: 4, y: 4 }))
+    const actual = reducer(initialState, actions.killCell({ x: 1, y: 1 }))
+
     const expected = {
-      ...initializeGameState,
+      ...initialState,
       grid: gridsFixtures.initialGrid
     }
 

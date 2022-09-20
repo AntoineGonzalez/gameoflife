@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
-import { Coord, GridProps, initialize, selectGrid, killCell, reviveCell } from '../store/slices/gameSlice'
+import gameSlice, { Coord, GridProps, selectGrid } from '../store/slices/gameSlice'
 import Cell from './Cell'
 
 const Grid = ({ width, height }: GridProps) => {
@@ -10,15 +10,15 @@ const Grid = ({ width, height }: GridProps) => {
 
   function handleCellClick (coord: Coord) {
     if (grid[coord.y][coord.x]) {
-      dispatch(killCell(coord))
+      dispatch(gameSlice.actions.killCell(coord))
       return
     }
 
-    dispatch(reviveCell(coord))
+    dispatch(gameSlice.actions.reviveCell(coord))
   }
 
   useEffect(() => {
-    dispatch(initialize({ width, height }))
+    dispatch(gameSlice.actions.initialize({ width, height }))
   }, [dispatch, height, width])
 
   return (

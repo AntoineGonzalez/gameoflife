@@ -4,12 +4,12 @@ type Props = {
 }
 
 const Cell = styled.div<Props>`
-    width:3em;
-    height:3em;
-    margin:auto;
-    border: 1px solid black;
-    box-sizing: border-box;
-    background-color: ${(props) => props.isAlive ? 'white' : 'grey'}
+  width:1em;
+  height:1em;
+  margin:auto;
+  border: 1px solid black;
+  box-sizing: border-box;
+  background-color: ${(props) => props.isAlive ? 'white' : 'grey'};
 `
 
 export default Cell

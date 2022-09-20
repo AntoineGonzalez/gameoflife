@@ -98,10 +98,16 @@ export const gameSlice = createSlice({
         ...computeIteration(state)
       }
     },
-    toggleRunningStatus: (state) => {
+    stopGame: (state) => {
       return {
         ...state,
-        isRunning: !state.isRunning
+        isRunning: false
+      }
+    },
+    startGame: (state) => {
+      return {
+        ...state,
+        isRunning: true
       }
     },
     initialize: (state, action: PayloadAction<GridProps>) => {
@@ -122,7 +128,10 @@ export const gameSlice = createSlice({
 })
 
 export const {
-  initialize, tick, toggleRunningStatus,
+  initialize,
+  tick,
+  startGame,
+  stopGame,
   killCell,
   reviveCell
 } = gameSlice.actions

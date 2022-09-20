@@ -1,7 +1,7 @@
 import './App.css'
 import styled from 'styled-components'
 import Grid from './components/Grid'
-import { selectGameState, tick, toggleRunningStatus } from './store/slices/gameSlice'
+import { selectGameState, tick, startGame, stopGame } from './store/slices/gameSlice'
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -10,33 +10,66 @@ function App () {
   const gameState = useSelector(selectGameState)
   const [timeInterval, setTimeInterval] = useState<unknown | null>(null)
 
-  function toggleGameStatus () {
-    if (!gameState.isRunning) {
-      setTimeInterval(setInterval(() => dispatch(tick()), 1000))
-    } else {
-      clearInterval(timeInterval as number)
-      setTimeInterval(null)
-    }
+  function handleStarGame () {
+    setTimeInterval(
+      setInterval(
+        () => dispatch(tick()),
+        1000
+      )
+    )
 
-    dispatch(toggleRunningStatus())
+    dispatch(startGame())
+  }
+
+  function handleStopGame () {
+    clearInterval(timeInterval as number)
+    setTimeInterval(null)
+    dispatch(stopGame())
   }
 
   return (
     <div className="App">
-      <Header>
-        Jeu de la vie
-      </Header>
-      <Grid width={20} height={10} />
+        <Body>
+        <Aside>
+            <Header>
+              Jeu de la vie
+            </Header>
+            <List>
+              <li>Nombre d&apos;itérations : {gameState.iterationCounter}</li>
+              <li>
+                <Button onClick={gameState.isRunning ? handleStopGame : handleStarGame}>
+                  {gameState.isRunning ? 'Stop' : 'Start'}
+                </Button>
+              </li>
+            </List>
+          </Aside>
+          <Container>
+            <Grid width={50} height={50} />
+          </Container>
+        </Body>
 
-      <button onClick={toggleGameStatus}>
-        {gameState.isRunning ? 'Stop' : 'Start'}
-      </button>
     </div>
   )
 }
 
-const Header = styled.header`
-  margin: 3em auto;
+const Container = styled.div`
+  margin: 1.5em;
 `
-
+const Header = styled.header`
+  margin-bottom: 1.5em;
+`
+const Body = styled.body`
+  display: flex;
+`
+const Aside = styled.aside`
+  width: 33%;
+  margin: 1.5em 0;
+`
+const List = styled.ul`
+  list-style-type: none;
+  padding: 0;
+`
+const Button = styled.button`
+  margin-top: 1em
+`
 export default App

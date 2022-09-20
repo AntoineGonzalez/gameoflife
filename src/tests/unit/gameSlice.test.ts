@@ -66,13 +66,14 @@ describe('store/slices/gameSlice', () => {
   it('reduces state to start the game', () => {
     const { actions, reducer } = gameSlice
 
-    const initialGameState = {
+    const initialState = {
       isRunning: false,
       iterationCounter: 0,
       grid: gridsFixtures.initialGrid
     }
 
-    const actual = reducer(initialGameState, actions.startGame())
+    const actual = reducer(initialState, actions.startGame())
+
     const expected = {
       isRunning: true,
       iterationCounter: 0,
@@ -85,13 +86,14 @@ describe('store/slices/gameSlice', () => {
   it('reduces state to stop the game', () => {
     const { actions, reducer } = gameSlice
 
-    const initialGameState = {
+    const initialState = {
       isRunning: true,
       iterationCounter: 0,
       grid: gridsFixtures.initialGrid
     }
 
-    const actual = reducer(initialGameState, actions.stopGame())
+    const actual = reducer(initialState, actions.stopGame())
+
     const expected = {
       isRunning: false,
       iterationCounter: 0,
@@ -103,12 +105,13 @@ describe('store/slices/gameSlice', () => {
 
   test('A dead cell with exactly three alive neighbor revive', () => {
     const { actions, reducer } = gameSlice
-    const initialGameState = {
+
+    const initialState = {
       isRunning: true,
       iterationCounter: 0,
       grid: gridsFixtures.revivingCondition.initial
     }
-    const actual = reducer(initialGameState, actions.tick)
+    const actual = reducer(initialState, actions.tick)
 
     const expected = {
       isRunning: true,
@@ -121,12 +124,14 @@ describe('store/slices/gameSlice', () => {
 
   test('A dead cell with exactly three alive neighbor revive (circular case)', () => {
     const { actions, reducer } = gameSlice
-    const initialGameState = {
+
+    const initialState = {
       isRunning: true,
       iterationCounter: 0,
       grid: gridsFixtures.revivingCondition.initial
     }
-    const actual = reducer(initialGameState, actions.tick)
+
+    const actual = reducer(initialState, actions.tick)
 
     const expected = {
       isRunning: true,
@@ -139,12 +144,14 @@ describe('store/slices/gameSlice', () => {
 
   test('A living cell with two or three alive neighbor stay alive', () => {
     const { actions, reducer } = gameSlice
-    const initialGameState = {
+
+    const initialState = {
       isRunning: true,
       iterationCounter: 0,
       grid: gridsFixtures.stayAliveCondition.initial
     }
-    const actual = reducer(initialGameState, actions.tick)
+
+    const actual = reducer(initialState, actions.tick)
 
     const expected = {
       isRunning: true,
@@ -157,12 +164,14 @@ describe('store/slices/gameSlice', () => {
 
   test('A living cell with two or three alive neighbor stay alive (circular case)', () => {
     const { actions, reducer } = gameSlice
-    const initialGameState = {
+
+    const initialState = {
       isRunning: true,
       iterationCounter: 0,
       grid: gridsFixtures.stayAliveCircularCondition.initial
     }
-    const actual = reducer(initialGameState, actions.tick)
+
+    const actual = reducer(initialState, actions.tick)
 
     const expected = {
       isRunning: true,
@@ -175,12 +184,14 @@ describe('store/slices/gameSlice', () => {
 
   test('A living cell without exactly two or three alive neighbor die', () => {
     const { actions, reducer } = gameSlice
-    const initialGameState = {
+
+    const initialState = {
       isRunning: true,
       iterationCounter: 0,
       grid: gridsFixtures.dyingCondition.initial
     }
-    const actual = reducer(initialGameState, actions.tick)
+
+    const actual = reducer(initialState, actions.tick)
 
     const expected = {
       isRunning: true,

@@ -1,7 +1,7 @@
 import './App.css'
 import styled from 'styled-components'
 import Grid from './components/Grid'
-import { selectGameState, tick, startGame, stopGame } from './store/slices/gameSlice'
+import gameSlice, { selectGameState } from './store/slices/gameSlice'
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -13,18 +13,18 @@ function App () {
   function handleStarGame () {
     setTimeInterval(
       setInterval(
-        () => dispatch(tick()),
+        () => dispatch(gameSlice.actions.tick()),
         1000
       )
     )
 
-    dispatch(startGame())
+    dispatch(gameSlice.actions.startGame())
   }
 
   function handleStopGame () {
     clearInterval(timeInterval as number)
     setTimeInterval(null)
-    dispatch(stopGame())
+    dispatch(gameSlice.actions.stopGame())
   }
 
   return (

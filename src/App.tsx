@@ -2,29 +2,40 @@ import './App.css'
 import styled from 'styled-components'
 import Grid from './components/Grid'
 import gameSlice, { selectIsRunning, selectIterationCounter } from './store/slices/gameSlice'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 function App () {
   const dispatch = useDispatch()
   const gameIsRunning = useSelector(selectIsRunning)
   const iterationCounter = useSelector(selectIterationCounter)
-  const [timeInterval, setTimeInterval] = useState<unknown | null>(null)
+  const [intervalId, setIntervalId] = useState<number | null>(null)
 
-  function handleStarGame () {
-    setTimeInterval(
-      setInterval(
+  useEffect(() => {
+    if (gameIsRunning) {
+      const id = setInterval(
         () => dispatch(gameSlice.actions.tick()),
         1000
       )
-    )
 
+      setIntervalId(id as unknown as number)
+    } else if (intervalId !== null) {
+      clearInterval(intervalId)
+      setIntervalId(null)
+    }
+
+    return () => {
+      if (intervalId !== null) {
+        clearInterval(intervalId)
+      }
+    }
+  }, [gameIsRunning])
+
+  function handleStarGame () {
     dispatch(gameSlice.actions.startGame())
   }
 
   function handleStopGame () {
-    clearInterval(timeInterval as number)
-    setTimeInterval(null)
     dispatch(gameSlice.actions.stopGame())
   }
 

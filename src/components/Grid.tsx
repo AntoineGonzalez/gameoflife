@@ -1,17 +1,17 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
-import gameSlice, { Coord, GridProps, selectGrid, selectGameState } from '../store/slices/gameSlice'
+import gameSlice, { Coord, GridProps, selectGrid, selectIsRunning } from '../store/slices/gameSlice'
 import Cell from './Cell'
 
 const Grid = ({ width, height }: GridProps) => {
   const dispatch = useDispatch()
 
   const grid = useSelector(selectGrid)
-  const gameState = useSelector(selectGameState)
+  const gameIsRunning = useSelector(selectIsRunning)
 
   function handleCellClick (coord: Coord) {
-    if (gameState.isRunning) {
+    if (gameIsRunning) {
       return
     }
 
@@ -28,7 +28,7 @@ const Grid = ({ width, height }: GridProps) => {
   }, [dispatch, height, width])
 
   return (
-    <Wrapper id="grid" width={grid[0].length} height={grid.length} isRunning={gameState.isRunning}>
+    <Wrapper id="grid" width={grid[0].length} height={grid.length} isRunning={gameIsRunning}>
       {
         grid.map((line, lineIndex) =>
           <Line key={`line-${lineIndex}`} role="row">

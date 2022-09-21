@@ -1,13 +1,14 @@
 import './App.css'
 import styled from 'styled-components'
 import Grid from './components/Grid'
-import gameSlice, { selectGameState } from './store/slices/gameSlice'
+import gameSlice, { selectIsRunning, selectIterationCounter } from './store/slices/gameSlice'
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 function App () {
   const dispatch = useDispatch()
-  const gameState = useSelector(selectGameState)
+  const gameIsRunning = useSelector(selectIsRunning)
+  const iterationCounter = useSelector(selectIterationCounter)
   const [timeInterval, setTimeInterval] = useState<unknown | null>(null)
 
   function handleStarGame () {
@@ -28,16 +29,16 @@ function App () {
   }
 
   return (
-    <AppContainer className="App">
+    <AppContainer>
       <Aside>
         <Header>
           Jeu de la vie
         </Header>
         <List>
-          <li>Nombre d&apos;itérations : {gameState.iterationCounter}</li>
+          <li>Nombre d&apos;itérations : {iterationCounter}</li>
           <li>
-            <Button onClick={gameState.isRunning ? handleStopGame : handleStarGame} role="button">
-              {gameState.isRunning ? 'Stop' : 'Start'}
+            <Button onClick={gameIsRunning ? handleStopGame : handleStarGame} role="button">
+              {gameIsRunning ? 'Stop' : 'Start'}
             </Button>
           </li>
         </List>

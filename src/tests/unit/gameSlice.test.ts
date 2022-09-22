@@ -314,6 +314,40 @@ describe('store/slices/gameSlice', () => {
     })
   })
 
+  it('reduces the selectPattern action', () => {
+    const { actions, reducer } = gameSlice
+
+    const initialState = {
+      isRunning: true,
+      iterationCounter: 0,
+      grid: gridsFixtures.initialGrid,
+      selectedPattern: null
+    }
+
+    const pattern = {
+      id: 3,
+      name: 'Space Ship',
+      size: {
+        width: 3,
+        height: 3
+      },
+      content: [
+        [false, true, false],
+        [false, false, true],
+        [true, true, true]
+      ]
+    }
+
+    const actual = reducer(initialState, actions.selectPattern(pattern))
+
+    const expected = {
+      ...initialState,
+      selectedPattern: pattern
+    }
+
+    expect(actual).toStrictEqual(expected)
+  })
+
   it('reduces the drawPattern action', () => {
     const { actions, reducer } = gameSlice
 

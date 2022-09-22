@@ -36,6 +36,10 @@ function App () {
     dispatch(gameSlice.actions.startGame())
   }
 
+  function handleClearGame () {
+    dispatch(gameSlice.actions.clearGame())
+  }
+
   function handleStopGame () {
     dispatch(gameSlice.actions.stopGame())
   }
@@ -48,6 +52,11 @@ function App () {
         </Header>
         <List>
           <li>Nombre d&apos;itérations : {iterationCounter}</li>
+          <li>
+            <Button onClick={handleClearGame} role="button">
+              Reset
+            </Button>
+          </li>
           <li>
             <Button onClick={gameIsRunning ? handleStopGame : handleStarGame} role="button">
               {gameIsRunning ? 'Stop' : 'Start'}

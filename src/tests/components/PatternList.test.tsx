@@ -3,7 +3,7 @@ import wrapWithReduxProvider from '../utils/reduxProviderWrapper'
 import userEvent from '@testing-library/user-event'
 import PatternList from '../../components/PatternList'
 
-describe('components/Grid.tsx', () => {
+describe('components/PatternList.tsx', () => {
   it('displays stored patterns', () => {
     render(wrapWithReduxProvider(<PatternList />))
 

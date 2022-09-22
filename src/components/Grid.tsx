@@ -6,7 +6,6 @@ import Cell from './Cell'
 
 const Grid = ({ width, height }: GridProps) => {
   const dispatch = useDispatch()
-
   const grid = useSelector(selectGrid)
   const gameIsRunning = useSelector(selectIsRunning)
 

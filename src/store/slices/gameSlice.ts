@@ -168,6 +168,8 @@ export const gameSlice = createSlice({
     }),
     initialize: (state, action: PayloadAction<GridProps>) => ({
       ...state,
+      isRunning: false,
+      iterationCounter: 0,
       grid: Array.from(Array(action.payload.height).keys()).map(() => {
         return Array.from(Array(action.payload.width).keys()).map(() => false)
       })

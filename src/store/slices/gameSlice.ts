@@ -1,6 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { Selector } from '../store'
-import { Pattern } from './patternSlice'
+
+export type Pattern = {
+  id: number
+  name: string
+  size: GridProps
+  content: boolean[][]
+}
 
 export type GameState = {
   grid: boolean[][]

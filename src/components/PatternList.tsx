@@ -1,12 +1,11 @@
 import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
 import { List } from '../App'
-import gameSlice, { selectUserPattern } from '../store/slices/gameSlice'
-import { Pattern, selectPatterns } from '../store/slices/patternSlice'
+import patterns from '../data/patterns'
+import gameSlice, { Pattern, selectUserPattern } from '../store/slices/gameSlice'
 
 const PatternList = () => {
   const dispatch = useDispatch()
-  const patterns = useSelector(selectPatterns)
   const selectedPattern = useSelector(selectUserPattern)
 
   const handlePatternClick = (pattern: Pattern) => {

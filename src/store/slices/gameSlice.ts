@@ -193,6 +193,6 @@ export const selectGrid: Selector<boolean[][]> = state => state.game.grid
 export const selectGameState: Selector<GameState> = state => state.game
 export const selectIsRunning: Selector<boolean> = state => state.game.isRunning
 export const selectIterationCounter: Selector<number> = state => state.game.iterationCounter
-export const selectSelectedPattern: Selector<Pattern | null> = state => state.game.selectedPattern
+export const selectUserPattern: Selector<Pattern | null> = state => state.game.selectedPattern
 
 export default gameSlice

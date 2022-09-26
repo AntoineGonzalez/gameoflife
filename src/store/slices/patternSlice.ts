@@ -9,9 +9,7 @@ export type Pattern = {
   content: boolean[][]
 }
 
-export type PatternsState = Pattern[]
-
-export const initialState: PatternsState = [
+export const initialState: Pattern[] = [
   {
     id: 1,
     name: 'Box',

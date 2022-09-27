@@ -1,21 +1,21 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
-import gameSlice, { Coord, GridProps, selectGrid, selectIsRunning, selectSelectedPattern } from '../store/slices/gameSlice'
+import gameSlice, { Coord, GridProps, selectGrid, selectIsRunning, selectUserPattern } from '../store/slices/gameSlice'
 import Cell from './Cell'
 
 const Grid = ({ width, height }: GridProps) => {
   const dispatch = useDispatch()
   const grid = useSelector(selectGrid)
   const gameIsRunning = useSelector(selectIsRunning)
-  const selectedPattern = useSelector(selectSelectedPattern)
+  const selectedPattern = useSelector(selectUserPattern)
 
   function handleCellClick (coord: Coord) {
     if (gameIsRunning) {
       return
     }
 
-    if (selectedPattern != null) {
+    if (selectedPattern !== null) {
       dispatch(gameSlice.actions.drawPattern(coord))
       return
     }

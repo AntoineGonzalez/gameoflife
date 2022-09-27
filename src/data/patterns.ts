@@ -1,17 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit'
-import { Selector } from '../store'
-import { GridProps } from './gameSlice'
-
-export type Pattern = {
-  id: number
-  name: string
-  size: GridProps
-  content: boolean[][]
-}
-
-export type PatternsState = Pattern[]
-
-export const initialState: PatternsState = [
+const patterns = [
   {
     id: 1,
     name: 'Box',
@@ -60,11 +47,4 @@ export const initialState: PatternsState = [
   }
 ]
 
-export const patternsSlice = createSlice({
-  name: 'patterns',
-  initialState,
-  reducers: {}
-})
-
-export const selectPatterns: Selector<Pattern[]> = state => state.patterns
-export default patternsSlice
+export default patterns

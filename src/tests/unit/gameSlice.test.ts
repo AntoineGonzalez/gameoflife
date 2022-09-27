@@ -1,6 +1,6 @@
-import gameSlice from '../../store/slices/gameSlice'
+import gameSlice, { GameState } from '../../store/slices/gameSlice'
 import gridsFixtures from '../fixtures/grids.json'
-import gridPatternFixtures from '../fixtures/patterns.json'
+import gridPatternsFixtures from '../fixtures/gridPatterns.json'
 
 describe('store/slices/gameSlice', () => {
   it('reduces the initialize action', () => {
@@ -9,7 +9,8 @@ describe('store/slices/gameSlice', () => {
     const initialState = {
       grid: [[]],
       isRunning: false,
-      iterationCounter: 0
+      iterationCounter: 0,
+      selectedPattern: null
     }
 
     const actual = reducer(
@@ -18,8 +19,7 @@ describe('store/slices/gameSlice', () => {
     )
 
     const expected = {
-      isRunning: false,
-      iterationCounter: 0,
+      ...initialState,
       grid: gridsFixtures.initialGrid
     }
 
@@ -32,7 +32,8 @@ describe('store/slices/gameSlice', () => {
     const initialState = {
       grid: gridsFixtures.initialGrid,
       isRunning: false,
-      iterationCounter: 0
+      iterationCounter: 0,
+      selectedPattern: null
     }
 
     const actual = reducer(initialState, actions.reviveCell({ x: 1, y: 1 }))
@@ -51,7 +52,8 @@ describe('store/slices/gameSlice', () => {
     const initialState = {
       grid: gridsFixtures.gridRevivedCell,
       isRunning: false,
-      iterationCounter: 0
+      iterationCounter: 0,
+      selectedPattern: null
     }
 
     const actual = reducer(initialState, actions.killCell({ x: 1, y: 1 }))
@@ -70,15 +72,15 @@ describe('store/slices/gameSlice', () => {
     const initialState = {
       isRunning: false,
       iterationCounter: 0,
-      grid: gridsFixtures.initialGrid
+      grid: gridsFixtures.initialGrid,
+      selectedPattern: null
     }
 
     const actual = reducer(initialState, actions.startGame())
 
     const expected = {
-      isRunning: true,
-      iterationCounter: 0,
-      grid: gridsFixtures.initialGrid
+      ...initialState,
+      isRunning: true
     }
 
     expect(actual).toStrictEqual(expected)
@@ -90,15 +92,15 @@ describe('store/slices/gameSlice', () => {
     const initialState = {
       isRunning: true,
       iterationCounter: 0,
-      grid: gridsFixtures.initialGrid
+      grid: gridsFixtures.initialGrid,
+      selectedPattern: null
     }
 
     const actual = reducer(initialState, actions.stopGame())
 
     const expected = {
-      isRunning: false,
-      iterationCounter: 0,
-      grid: gridsFixtures.initialGrid
+      ...initialState,
+      isRunning: false
     }
 
     expect(actual).toStrictEqual(expected)
@@ -110,12 +112,13 @@ describe('store/slices/gameSlice', () => {
     const initialState = {
       isRunning: true,
       iterationCounter: 0,
-      grid: gridsFixtures.revivingCondition.initial
+      grid: gridsFixtures.revivingCondition.initial,
+      selectedPattern: null
     }
     const actual = reducer(initialState, actions.tick)
 
     const expected = {
-      isRunning: true,
+      ...initialState,
       iterationCounter: 1,
       grid: gridsFixtures.revivingCondition.expected
     }
@@ -129,13 +132,14 @@ describe('store/slices/gameSlice', () => {
     const initialState = {
       isRunning: true,
       iterationCounter: 0,
-      grid: gridsFixtures.revivingCondition.initial
+      grid: gridsFixtures.revivingCondition.initial,
+      selectedPattern: null
     }
 
     const actual = reducer(initialState, actions.tick)
 
     const expected = {
-      isRunning: true,
+      ...initialState,
       iterationCounter: 1,
       grid: gridsFixtures.revivingCondition.expected
     }
@@ -149,13 +153,14 @@ describe('store/slices/gameSlice', () => {
     const initialState = {
       isRunning: true,
       iterationCounter: 0,
-      grid: gridsFixtures.stayAliveCondition.initial
+      grid: gridsFixtures.stayAliveCondition.initial,
+      selectedPattern: null
     }
 
     const actual = reducer(initialState, actions.tick)
 
     const expected = {
-      isRunning: true,
+      ...initialState,
       iterationCounter: 1,
       grid: gridsFixtures.stayAliveCondition.expected
     }
@@ -169,13 +174,14 @@ describe('store/slices/gameSlice', () => {
     const initialState = {
       isRunning: true,
       iterationCounter: 0,
-      grid: gridsFixtures.stayAliveCircularCondition.initial
+      grid: gridsFixtures.stayAliveCircularCondition.initial,
+      selectedPattern: null
     }
 
     const actual = reducer(initialState, actions.tick)
 
     const expected = {
-      isRunning: true,
+      ...initialState,
       iterationCounter: 1,
       grid: gridsFixtures.stayAliveCircularCondition.expected
     }
@@ -189,13 +195,14 @@ describe('store/slices/gameSlice', () => {
     const initialState = {
       isRunning: true,
       iterationCounter: 0,
-      grid: gridsFixtures.dyingCondition.initial
+      grid: gridsFixtures.dyingCondition.initial,
+      selectedPattern: null
     }
 
     const actual = reducer(initialState, actions.tick)
 
     const expected = {
-      isRunning: true,
+      ...initialState,
       iterationCounter: 1,
       grid: gridsFixtures.dyingCondition.expected
     }
@@ -209,15 +216,16 @@ describe('store/slices/gameSlice', () => {
     const initialState = {
       isRunning: true,
       iterationCounter: 0,
-      grid: gridPatternFixtures.stableBloc.initial
+      grid: gridPatternsFixtures.stableBloc.initial,
+      selectedPattern: null
     }
 
     const actual = reducer(initialState, actions.tick)
 
     const expected = {
-      isRunning: true,
+      ...initialState,
       iterationCounter: 1,
-      grid: gridPatternFixtures.stableBloc.expected
+      grid: gridPatternsFixtures.stableBloc.expected
     }
 
     expect(actual).toStrictEqual(expected)
@@ -229,15 +237,16 @@ describe('store/slices/gameSlice', () => {
     const initialState = {
       isRunning: true,
       iterationCounter: 0,
-      grid: gridPatternFixtures.frogOscillator.initial
+      grid: gridPatternsFixtures.frogOscillator.initial,
+      selectedPattern: null
     }
 
     const actual = reducer(initialState, actions.tick)
 
     const expected = {
-      isRunning: true,
+      ...initialState,
       iterationCounter: 1,
-      grid: gridPatternFixtures.frogOscillator.expected
+      grid: gridPatternsFixtures.frogOscillator.expected
     }
 
     expect(actual).toStrictEqual(expected)
@@ -249,45 +258,47 @@ describe('store/slices/gameSlice', () => {
     const initialState = {
       isRunning: true,
       iterationCounter: 0,
-      grid: gridPatternFixtures.spaceShip.initial
+      grid: gridPatternsFixtures.spaceShip.initial,
+      selectedPattern: null
     }
 
     const step1 = reducer(initialState, actions.tick)
     expect(step1).toStrictEqual({
-      isRunning: true,
+      ...initialState,
       iterationCounter: 1,
-      grid: gridPatternFixtures.spaceShip.step1
+      grid: gridPatternsFixtures.spaceShip.step1
     })
 
     const step2 = reducer(step1, actions.tick)
     expect(step2).toStrictEqual({
-      isRunning: true,
+      ...initialState,
       iterationCounter: 2,
-      grid: gridPatternFixtures.spaceShip.step2
+      grid: gridPatternsFixtures.spaceShip.step2
     })
 
     const step3 = reducer(step2, actions.tick)
     expect(step3).toStrictEqual({
-      isRunning: true,
+      ...initialState,
       iterationCounter: 3,
-      grid: gridPatternFixtures.spaceShip.step3
+      grid: gridPatternsFixtures.spaceShip.step3
     })
 
     const step4 = reducer(step3, actions.tick)
     expect(step4).toStrictEqual({
-      isRunning: true,
+      ...initialState,
       iterationCounter: 4,
-      grid: gridPatternFixtures.spaceShip.step4
+      grid: gridPatternsFixtures.spaceShip.step4
     })
   })
 
   test('cannon pattern', () => {
     const { actions, reducer } = gameSlice
 
-    const initialState = {
+    const initialState: GameState = {
       isRunning: true,
       iterationCounter: 0,
-      grid: gridPatternFixtures.cannon.initial
+      grid: gridPatternsFixtures.cannon.initial,
+      selectedPattern: null
     }
 
     let actual = initialState
@@ -297,9 +308,103 @@ describe('store/slices/gameSlice', () => {
     }
 
     expect(actual).toStrictEqual({
-      isRunning: true,
+      ...initialState,
       iterationCounter: 30,
-      grid: gridPatternFixtures.cannon.expected
+      grid: gridPatternsFixtures.cannon.expected
+    })
+  })
+
+  it('reduces the selectPattern action', () => {
+    const { actions, reducer } = gameSlice
+
+    const initialState = {
+      isRunning: true,
+      iterationCounter: 0,
+      grid: gridsFixtures.initialGrid,
+      selectedPattern: null
+    }
+
+    const pattern = {
+      id: 3,
+      name: 'Space Ship',
+      size: {
+        width: 3,
+        height: 3
+      },
+      content: [
+        [false, true, false],
+        [false, false, true],
+        [true, true, true]
+      ]
+    }
+
+    const actual = reducer(initialState, actions.selectPattern(pattern))
+
+    const expected = {
+      ...initialState,
+      selectedPattern: pattern
+    }
+
+    expect(actual).toStrictEqual(expected)
+  })
+
+  it('reduces the drawPattern action', () => {
+    const { actions, reducer } = gameSlice
+
+    const initialState = {
+      isRunning: true,
+      iterationCounter: 0,
+      grid: gridsFixtures.drawSpaceShipPattern.initial,
+      selectedPattern: {
+        id: 3,
+        name: 'Space Ship',
+        size: {
+          width: 3,
+          height: 3
+        },
+        content: [
+          [false, true, false],
+          [false, false, true],
+          [true, true, true]
+        ]
+      }
+    }
+
+    const actual = reducer(initialState, actions.drawPattern({ x: 1, y: 1 }))
+
+    expect(actual).toStrictEqual({
+      ...initialState,
+      grid: gridsFixtures.drawSpaceShipPattern.expected
+    })
+  })
+
+  it('reduces the drawPattern action (circular case)', () => {
+    const { actions, reducer } = gameSlice
+
+    const initialState = {
+      isRunning: true,
+      iterationCounter: 0,
+      grid: gridsFixtures.drawSpaceShipPattern.initial,
+      selectedPattern: {
+        id: 3,
+        name: 'Space Ship',
+        size: {
+          width: 3,
+          height: 3
+        },
+        content: [
+          [false, true, false],
+          [false, false, true],
+          [true, true, true]
+        ]
+      }
+    }
+
+    const actual = reducer(initialState, actions.drawPattern({ x: 4, y: 4 }))
+
+    expect(actual).toStrictEqual({
+      ...initialState,
+      grid: gridsFixtures.drawSpaceShipPattern.expectedCircular
     })
   })
 })

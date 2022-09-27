@@ -4,6 +4,7 @@ import Grid from './components/Grid'
 import gameSlice, { selectIsRunning, selectIterationCounter } from './store/slices/gameSlice'
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import PatternList from './components/PatternList'
 
 function App () {
   const dispatch = useDispatch()
@@ -53,9 +54,10 @@ function App () {
             </Button>
           </li>
         </List>
+        <PatternList></PatternList>
       </Aside>
       <Container>
-        <Grid width={50} height={50} />
+        <Grid width={10} height={10} />
       </Container>
     </AppContainer>
   )
@@ -63,6 +65,7 @@ function App () {
 
 const Container = styled.div`
   margin: 1.5em;
+  min-height: 100vh;
 `
 const Header = styled.header`
   margin-bottom: 1.5em;
@@ -71,10 +74,12 @@ const AppContainer = styled.div`
   display: flex;
 `
 const Aside = styled.aside`
-  width: 33%;
-  margin: 1.5em 0;
+  width: 15%;
+  padding: 1.5em 0.5em;
+  text-align: center;
+  border-right: solid 1px grey;
 `
-const List = styled.ul`
+export const List = styled.ul`
   list-style-type: none;
   padding: 0;
 `

@@ -42,6 +42,8 @@ const Grid = ({ width, height }: GridProps) => {
                 <Cell
                   id={`cell-${colIndex}-${lineIndex}`}
                   key={`cell-${colIndex}-${lineIndex}`}
+                  gridWidth={grid[0].length}
+                  gridHeight={grid.length}
                   isAlive={isAlive}
                   onClick={() => handleCellClick({ x: colIndex, y: lineIndex })}
                   role="gridcell"
@@ -62,8 +64,6 @@ type WrapperProps = {
 }
 
 const Wrapper = styled.div<WrapperProps>`
-  width:${({ width }) => width * 1}em;
-  height:${({ height }) => height * 1}em;
   margin: auto;
   margin-bottom: 1.5em;
   border: solid 1px black;

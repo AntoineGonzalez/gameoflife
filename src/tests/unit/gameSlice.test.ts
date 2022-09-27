@@ -66,6 +66,38 @@ describe('store/slices/gameSlice', () => {
     expect(actual).toStrictEqual(expected)
   })
 
+  it('reduces the clearGame action', () => {
+    const { actions, reducer } = gameSlice
+
+    const initialState = {
+      isRunning: true,
+      iterationCounter: 2,
+      grid: gridsFixtures.drawSpaceShipPattern.expected,
+      selectedPattern: {
+        id: 3,
+        name: 'Space Ship',
+        size: {
+          width: 3,
+          height: 3
+        },
+        content: [
+          [false, true, false],
+          [false, false, true],
+          [true, true, true]
+        ]
+      }
+    }
+
+    const actual = reducer(initialState, actions.clearGame())
+
+    expect(actual).toStrictEqual({
+      ...initialState,
+      isRunning: false,
+      iterationCounter: 0,
+      grid: gridsFixtures.drawSpaceShipPattern.initial
+    })
+  })
+
   it('reduces state to start the game', () => {
     const { actions, reducer } = gameSlice
 

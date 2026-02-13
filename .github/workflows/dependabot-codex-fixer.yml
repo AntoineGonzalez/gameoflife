@@ -1,0 +1,71 @@
+name: Dependabot Codex Fixer (CRA)
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: dependabot-codex-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  fix:
+    if: github.event.pull_request.user.login == 'dependabot[bot]' && contains(github.event.pull_request.labels.*.name, 'ai-fix')
+    runs-on: ubuntu-latest
+    env:
+      CI: "true"
+
+    steps:
+      - name: Checkout PR branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      # Install dependencies BEFORE Codex (network may be restricted inside Codex sandbox)
+      - name: Install deps
+        run: npm ci
+
+      - name: Create agent output dir
+        run: mkdir -p .agent
+
+      - name: Run Codex to fix breaking changes
+        id: codex
+        uses: openai/codex-action@v1
+        with:
+          openai-api-key: ${{ secrets.OPENAI_API_KEY }}
+          prompt-file: .github/codex/prompts/dependabot-fix.md
+          output-file: .agent/codex-output.md
+          safety-strategy: drop-sudo
+          sandbox: workspace-write
+          allow-bots: true
+
+      - name: Run checks after Codex
+        run: |
+          npm run lint:css
+          npm test --silent
+          npm run build
+
+      # Create a new PR on top of the Dependabot branch (stacked PR)
+      - name: Create child PR with fixes
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.BOT_GH_TOKEN }}
+          commit-message: "fix: codex updates for dependabot PR #${{ github.event.pull_request.number }}"
+          branch: codex/fix-dependabot-${{ github.event.pull_request.number }}
+          base: ${{ github.head_ref }}
+          title: "Codex fixes for Dependabot PR #${{ github.event.pull_request.number }}"
+          body: |
+            This PR is stacked on top of Dependabot PR #${{ github.event.pull_request.number }}.
+            Merge this PR into `${{ github.head_ref }}` to update the original Dependabot PR.
+

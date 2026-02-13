@@ -1,0 +1,11 @@
+version: 2
+
+updates:
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+
+    # Only open PRs for Testing Library packages
+    allow:
+      - dependency-name: "@testing-library/*"

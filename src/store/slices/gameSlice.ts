@@ -72,7 +72,7 @@ const getCellNeighboursValues = (grid: boolean[][], { x, y }: Coord) => {
   ]
 }
 
-function computeNextGrid (grid: boolean[][]): boolean[][] {
+const computeNextGrid = (grid: boolean[][]): boolean[][] => {
   return grid.map((line, lineIndex) =>
     line.map((cellIsAlive, colIndex) => {
       const alivedNeighboursCount = getCellNeighboursValues(
@@ -94,7 +94,7 @@ function computeNextGrid (grid: boolean[][]): boolean[][] {
   )
 }
 
-function insertPattern (grid: boolean[][], pattern: Pattern, coord: Coord): boolean[][] {
+const insertPattern = (grid: boolean[][], pattern: Pattern, coord: Coord): boolean[][] => {
   const patternWidth = pattern.size.width
   const patternHeight = pattern.size.height
   const availableWidth = grid[0].length - coord.x
@@ -164,8 +164,18 @@ export const gameSlice = createSlice({
       ...state,
       isRunning: true
     }),
+    clearGame: (state) => ({
+      ...state,
+      grid: Array.from(Array(state.grid.length).keys()).map(() => {
+        return Array.from(Array(state.grid[0].length).keys()).map(() => false)
+      }),
+      isRunning: false,
+      iterationCounter: 0
+    }),
     initialize: (state, action: PayloadAction<GridProps>) => ({
       ...state,
+      isRunning: false,
+      iterationCounter: 0,
       grid: Array.from(Array(action.payload.height).keys()).map(() => {
         return Array.from(Array(action.payload.width).keys()).map(() => false)
       })

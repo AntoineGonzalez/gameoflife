@@ -1,7 +1,6 @@
-import { render, screen } from '@testing-library/react'
+import { render, screen, waitFor, fireEvent } from '@testing-library/react'
 import Grid from '../../components/Grid'
 import wrapWithReduxProvider from '../utils/reduxProviderWrapper'
-import userEvent from '@testing-library/user-event'
 import App from '../../App'
 
 describe('components/Grid.tsx', () => {
@@ -20,31 +19,39 @@ describe('components/Grid.tsx', () => {
     })
   })
 
-  it('revives a cell when a user clicks on a dead one', () => {
+  it('revives a cell when a user clicks on a dead one', async () => {
     render(wrapWithReduxProvider(<Grid width={20} height={10} />))
 
     const cell = screen.getAllByRole('gridcell')[0]
     expect(cell).toHaveStyle('background-color:grey')
-    userEvent.click(cell)
-    expect(cell).toHaveStyle('background-color:white')
+    fireEvent.click(cell)
+    await waitFor(() => {
+      expect(cell).toHaveStyle('background-color:white')
+    })
   })
 
-  it('kills a cell when a user clicks on a living one', () => {
+  it('kills a cell when a user clicks on a living one', async () => {
     render(wrapWithReduxProvider(<Grid width={20} height={10} />))
 
     const cell = screen.getAllByRole('gridcell')[0]
-    userEvent.click(cell)
-    userEvent.click(cell)
-    expect(cell).toHaveStyle('background-color:grey')
+    fireEvent.click(cell)
+    fireEvent.click(cell)
+    await waitFor(() => {
+      expect(cell).toHaveStyle('background-color:grey')
+    })
   })
 
-  it('starts the game on start game button click and stops the game on stop game button click', () => {
+  it('starts the game on start game button click and stops the game on stop game button click', async () => {
     render(wrapWithReduxProvider(<App />))
 
     const startGameBtn = screen.getByRole('button', { name: 'Start' })
-    userEvent.click(startGameBtn)
-    expect(startGameBtn).toHaveTextContent('Stop')
-    userEvent.click(startGameBtn)
-    expect(startGameBtn).toHaveTextContent('Start')
+    fireEvent.click(startGameBtn)
+    await waitFor(() => {
+      expect(startGameBtn).toHaveTextContent('Stop')
+    })
+    fireEvent.click(startGameBtn)
+    await waitFor(() => {
+      expect(startGameBtn).toHaveTextContent('Start')
+    })
   })
 })

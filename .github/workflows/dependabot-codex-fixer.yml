@@ -1,0 +1,65 @@
+name: Dependabot Codex Fixer (CRA)
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: dependabot-codex-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  fix:
+    if: github.event.pull_request.user.login == 'dependabot[bot]' && contains(github.event.pull_request.labels.*.name, 'ai-fix')
+    runs-on: ubuntu-latest
+    env:
+      CI: "true"
+
+    steps:
+      - name: Checkout PR branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      # Install dependencies BEFORE Codex (network may be restricted inside Codex sandbox)
+      - name: Install deps
+        run: npm ci
+
+      - name: Run Codex to fix breaking changes
+        id: codex
+        uses: openai/codex-action@v1
+        with:
+          openai-api-key: ${{ secrets.OPENAI_API_KEY }}
+          prompt-file: .github/codex/prompts/dependabot-fix.md
+          output-file: .agent/codex-output.md
+          safety-strategy: drop-sudo
+          sandbox: workspace-write
+
+      - name: Run checks after Codex
+        run: |
+          npm run lint:css
+          npm test --silent
+          npm run build
+
+      - name: Commit & push changes (if any)
+        run: |
+          if git diff --quiet; then
+            echo "No changes to commit."
+            exit 0
+          fi
+          git config user.name "codex-fixer[bot]"
+          git config user.email "codex-fixer[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "chore: fix breaking changes from Dependabot update"
+          git push

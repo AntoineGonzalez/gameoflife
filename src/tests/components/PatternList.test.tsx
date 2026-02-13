@@ -15,18 +15,19 @@ describe('components/PatternList.tsx', () => {
     })
   })
 
-  it('selects/unselects pattern on click', () => {
+  it('selects/unselects pattern on click', async () => {
     render(wrapWithReduxProvider(<PatternList />))
 
+    const user = userEvent.setup()
     const patterns = screen.getAllByRole('option')
     const pattern = patterns[0]
-    userEvent.click(pattern)
+    await user.click(pattern)
     const selectedPatterns = screen.getAllByRole('option', { selected: true })
 
     expect(selectedPatterns).toHaveLength(1)
     expect(selectedPatterns[0]).toStrictEqual(pattern)
 
-    userEvent.click(pattern)
+    await user.click(pattern)
 
     expect(pattern.getAttribute('aria-selected')).toBe('false')
   })

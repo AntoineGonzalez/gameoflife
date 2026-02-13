@@ -20,31 +20,31 @@ describe('components/Grid.tsx', () => {
     })
   })
 
-  it('revives a cell when a user clicks on a dead one', async () => {
+  it('revives a cell when a user clicks on a dead one', () => {
     render(wrapWithReduxProvider(<Grid width={20} height={10} />))
 
     const cell = screen.getAllByRole('gridcell')[0]
     expect(cell).toHaveStyle('background-color:grey')
-    await userEvent.click(cell)
+    userEvent.click(cell)
     expect(cell).toHaveStyle('background-color:white')
   })
 
-  it('kills a cell when a user clicks on a living one', async () => {
+  it('kills a cell when a user clicks on a living one', () => {
     render(wrapWithReduxProvider(<Grid width={20} height={10} />))
 
     const cell = screen.getAllByRole('gridcell')[0]
-    await userEvent.click(cell)
-    await userEvent.click(cell)
+    userEvent.click(cell)
+    userEvent.click(cell)
     expect(cell).toHaveStyle('background-color:grey')
   })
 
-  it('starts the game on start game button click and stops the game on stop game button click', async () => {
+  it('starts the game on start game button click and stops the game on stop game button click', () => {
     render(wrapWithReduxProvider(<App />))
 
     const startGameBtn = screen.getByRole('button', { name: 'Start' })
-    await userEvent.click(startGameBtn)
+    userEvent.click(startGameBtn)
     expect(startGameBtn).toHaveTextContent('Stop')
-    await userEvent.click(startGameBtn)
+    userEvent.click(startGameBtn)
     expect(startGameBtn).toHaveTextContent('Start')
   })
 })
